@@ -7,6 +7,7 @@ import java.util.List;
 
 public class AnswerProvider {
     private final List<Integer> answer = new ArrayList<>();
+    private final NumberRules rules = new NumberRules();
 
     // 정답 생성
     public void setAnswer() {
@@ -18,6 +19,7 @@ public class AnswerProvider {
                 answer.add(randomNumber);
             }
         }
+        rules.checkRules(answer);
     }
 
     // 정답 제공
