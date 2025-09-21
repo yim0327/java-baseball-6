@@ -6,13 +6,13 @@ import java.util.List;
 public class Player {
     private final NumberRules rules = new NumberRules();
 
-    public List<Integer> submittedNum(String input) {
-        List<Integer> parsedNum = Arrays.stream(input.split(""))
+    public List<Integer> validateNumbers(String input) {
+        List<Integer> numbers = Arrays.stream(input.split(""))
                 .map(Integer::parseInt)
                 .toList();
 
-        rules.checkRules(parsedNum);
+        rules.checkRules(numbers);
 
-        return parsedNum;
+        return numbers;
     }
 }

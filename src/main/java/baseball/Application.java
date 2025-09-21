@@ -18,7 +18,7 @@ public class Application {
         while (true) {
             System.out.println("숫자를 입력해주세요 : ");
             String input = Console.readLine();
-            List<Integer> ball = player.submittedNum(input);
+            List<Integer> guess = player.validateNumbers(input);
 
         }
 
