@@ -18,4 +18,8 @@ public class Hint {
         String s = strike > 0 ? strike + "스트라이크" : "";
         return (b + " " + s).trim();
     }
+
+    public int getStrike() {
+        return strike;
+    }
 }
