@@ -1,13 +1,16 @@
 package baseball;
 
 import baseball.domain.*;
+import baseball.domain.generator.NumberGenerator;
+import baseball.domain.generator.RandomNumberGenerator;
 import camp.nextstep.edu.missionutils.Console;
 
 import java.util.List;
 
 public class Application {
     public static void main(String[] args) {
-        AnswerProvider computer = new AnswerProvider();
+        NumberGenerator generator = new RandomNumberGenerator();
+        AnswerProvider computer = new AnswerProvider(generator);
         Player player = new Player();
         Referee referee = new Referee();
 
