@@ -30,7 +30,7 @@ public class GameManager {
                 Hint hint = baseballGame.judge(guess);
                 showHint(hint);
 
-                if (hint.getStrike() == NumberRules.DIGIT_LENGTH) {
+                if (hint.isWin(hint)) {
                     showGameOver();
                     break;
                 }

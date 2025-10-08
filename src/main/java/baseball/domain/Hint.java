@@ -22,4 +22,8 @@ public class Hint {
     public int getStrike() {
         return strike;
     }
+
+    public boolean isWin(Hint hint) {
+        return hint.getStrike() == NumberRules.DIGIT_LENGTH;
+    }
 }
