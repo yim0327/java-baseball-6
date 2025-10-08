@@ -23,26 +23,33 @@ public class GameManager {
 
         while(true) {
             baseballGame.resetAnswer();
-
-            while (true) {
-                try {
-                    List<Integer> guess = baseballGame.validateGuess(getInput());
-                    Hint hint = baseballGame.judge(guess);
-                    showHint(hint);
-
-                    if (hint.isWin(hint)) {
-                        showGameOver();
-                        break;
-                    }
-                } catch (IllegalArgumentException e) {
-                    outputView.printError(e.getMessage());
-                }
-            }
-
-            String restart = inputView.inputRestartNumber();
-            if ("2".equals(restart)) { break; }
-            if (!"1".equals(restart)) { throw new IllegalArgumentException("1 또는 2만 입력할 수 있습니다."); }
+            playRound();
+            if (!shouldRestart()) break;
         }
+    }
+
+    private void playRound() {
+        while (true) {
+            try {
+                List<Integer> guess = baseballGame.validateGuess(getInput());
+                Hint hint = baseballGame.judge(guess);
+                showHint(hint);
+
+                if (hint.isWin(hint)) {
+                    showGameOver();
+                    break;
+                }
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
+    }
+
+    private boolean shouldRestart() {
+        String restart = inputView.inputRestartNumber();
+        if ("2".equals(restart)) { return false; }
+        if (!"1".equals(restart)) { throw new IllegalArgumentException("1 또는 2만 입력할 수 있습니다."); }
+        return true;
     }
 
     private String getInput() {
