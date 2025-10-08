@@ -15,4 +15,8 @@ public class OutputView {
     public void printGameOver() {
         System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
     }
+
+    public void printError(String errorMessage) {
+        System.out.println("[ERROR] " + errorMessage);
+    }
 }

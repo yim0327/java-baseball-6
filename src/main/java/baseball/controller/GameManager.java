@@ -1,7 +1,6 @@
 package baseball.controller;
 
 import baseball.domain.Hint;
-import baseball.domain.NumberRules;
 import baseball.service.BaseballGame;
 import baseball.view.InputView;
 import baseball.view.OutputView;
@@ -26,13 +25,17 @@ public class GameManager {
             baseballGame.resetAnswer();
 
             while (true) {
-                List<Integer> guess = baseballGame.validateGuess(getInput());
-                Hint hint = baseballGame.judge(guess);
-                showHint(hint);
+                try {
+                    List<Integer> guess = baseballGame.validateGuess(getInput());
+                    Hint hint = baseballGame.judge(guess);
+                    showHint(hint);
 
-                if (hint.isWin(hint)) {
-                    showGameOver();
-                    break;
+                    if (hint.isWin(hint)) {
+                        showGameOver();
+                        break;
+                    }
+                } catch (IllegalArgumentException e) {
+                    outputView.printError(e.getMessage());
                 }
             }
 
