@@ -23,13 +23,8 @@ public class GameManager {
         outputView.showGameStart();
 
         do {
-            try {
-                baseballGame.resetAnswer();
-                playRound();
-            } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
-            }
-
+            baseballGame.resetAnswer();
+            playRound();
         } while (shouldRestart());
     }
 
@@ -57,10 +52,13 @@ public class GameManager {
     }
 
     private boolean shouldRestart() {
-        String restart = inputView.inputRestartNumber();
-        if ("2".equals(restart)) { return false; }
-        if (!"1".equals(restart)) { throw new IllegalArgumentException("1 또는 2만 입력할 수 있습니다."); }
-        return true;
+        while(true) {
+            try {
+                return !"2".equals(inputView.inputRestartNumber());
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+        }
     }
 
 }
