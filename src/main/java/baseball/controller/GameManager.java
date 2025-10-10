@@ -19,7 +19,7 @@ public class GameManager {
     }
 
     public void playGame() {
-        showGameStart();
+        outputView.showGameStart();
 
         while(true) {
             baseballGame.resetAnswer();
@@ -31,12 +31,13 @@ public class GameManager {
     private void playRound() {
         while (true) {
             try {
-                List<Integer> guess = baseballGame.validateGuess(getInput());
+                List<Integer> guess = baseballGame.validateGuess(inputView.inputNumbers());
                 Hint hint = baseballGame.judge(guess);
-                showHint(hint);
+
+                outputView.printHint(hint);
 
                 if (hint.isWin(hint)) {
-                    showGameOver();
+                    outputView.printGameOver();
                     break;
                 }
             } catch (IllegalArgumentException e) {
@@ -52,19 +53,4 @@ public class GameManager {
         return true;
     }
 
-    private String getInput() {
-        return inputView.inputNumbers();
-    }
-
-    private void showGameStart() {
-        outputView.showGameStart();
-    }
-
-    private void showHint(Hint hint) {
-        outputView.printHint(hint);
-    }
-
-    private void showGameOver() {
-        outputView.printGameOver();
-    }
 }
