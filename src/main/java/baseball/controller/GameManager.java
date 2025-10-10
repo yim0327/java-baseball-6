@@ -11,6 +11,7 @@ public class GameManager {
     private final InputView inputView;
     private final OutputView outputView;
     private final BaseballGame baseballGame;
+    private boolean gameOver;
 
     public GameManager(InputView inputView, OutputView outputView, BaseballGame game) {
         this.inputView = inputView;
@@ -21,29 +22,38 @@ public class GameManager {
     public void playGame() {
         outputView.showGameStart();
 
-        while(true) {
-            baseballGame.resetAnswer();
-            playRound();
-            if (!shouldRestart()) break;
-        }
+        do {
+            try {
+                baseballGame.resetAnswer();
+                playRound();
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
+
+        } while (shouldRestart());
     }
 
     private void playRound() {
-        while (true) {
+       do {
             try {
                 List<Integer> guess = baseballGame.validateGuess(inputView.inputNumbers());
                 Hint hint = baseballGame.judge(guess);
 
                 outputView.printHint(hint);
 
-                if (hint.isWin(hint)) {
-                    outputView.printGameOver();
-                    break;
-                }
+                gameOver = handleWin(hint);
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
             }
+       } while(!gameOver);
+    }
+
+    private boolean handleWin(Hint hint) {
+        if (hint.isWin(hint)) {
+            outputView.printGameOver();
+            return true;
         }
+        return false;
     }
 
     private boolean shouldRestart() {
