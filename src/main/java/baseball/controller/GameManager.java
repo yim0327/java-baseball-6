@@ -20,7 +20,7 @@ public class GameManager {
     }
 
     public void playGame() {
-        outputView.showGameStart();
+        outputView.printGameStart();
 
         do {
             baseballGame.resetAnswer();
