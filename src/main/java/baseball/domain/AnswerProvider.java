@@ -1,29 +1,44 @@
 package baseball.domain;
 
-import camp.nextstep.edu.missionutils.Randoms;
+import baseball.domain.generator.NumberGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AnswerProvider {
-    private final List<Integer> answer = new ArrayList<>();
-    private final NumberRules rules = new NumberRules();
+    private final NumberGenerator generator;
+    private Ball ball;
 
-    // 정답 생성
+    public AnswerProvider(NumberGenerator generator) {
+        this.generator = generator;
+    }
+
     public void setAnswer() {
-        answer.clear(); // 재시작용 리스트 비우기
-        while (answer.size() < NumberRules.DIGIT_LENGTH) {
-            int randomNumber = Randoms.pickNumberInRange(NumberRules.MIN_DIGITS,
-                    NumberRules.MAX_DIGITS);
+        List<Integer> answer = new ArrayList<>();
+        while (answer.size() < Ball.DIGIT_LENGTH) {
+            int randomNumber = generator.generate();
             if (!answer.contains(randomNumber)) {
                 answer.add(randomNumber);
             }
         }
-        rules.checkRules(answer);
+         ball = Ball.of(answer);
     }
 
-    // 정답 제공
-    public List<Integer> getAnswer() {
-        return List.copyOf(answer);
+    public List<Integer> getAnswerNumbers() {
+        return ball.getBallNumbers();
+    }
+
+    public Hint judge(List<Integer> guess) {
+        int strike = 0;
+        int ball = 0;
+
+        for(int i = 0; i < guess.size(); i++) {
+            int tmp = guess.get(i);
+
+            if(tmp == getAnswerNumbers().get(i)) { strike++; }
+            else if(getAnswerNumbers().contains(tmp)) { ball++; }
+        }
+
+        return new Hint(strike, ball);
     }
 }
