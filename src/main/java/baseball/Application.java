@@ -15,8 +15,7 @@ public class Application {
         NumberGenerator generator = new RandomNumberGenerator();
         AnswerProvider computer = new AnswerProvider(generator);
         Player player = new Player();
-        Referee referee = new Referee();
-        BaseballGame game = new BaseballGame(player, computer, referee);
+        BaseballGame game = new BaseballGame(player, computer);
         GameManager manager = new GameManager(inputView, outputView, game);
 
         manager.playGame();

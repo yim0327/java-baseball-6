@@ -14,9 +14,8 @@ public class AnswerProvider {
         this.generator = generator;
     }
 
-    // 정답 생성
     public void setAnswer() {
-        answer.clear(); // 재시작용 리스트 비우기
+        answer.clear();
         while (answer.size() < NumberRules.DIGIT_LENGTH) {
             int randomNumber = generator.generate();
             if (!answer.contains(randomNumber)) {
@@ -26,8 +25,21 @@ public class AnswerProvider {
         rules.checkRules(answer);
     }
 
-    // 정답 제공
     public List<Integer> getAnswer() {
         return List.copyOf(answer);
+    }
+
+    public Hint judge(List<Integer> guess) {
+        int strike = 0;
+        int ball = 0;
+
+        for(int i = 0; i < guess.size(); i++) {
+            int tmp = guess.get(i);
+
+            if(tmp == answer.get(i)) { strike++; }
+            else if(answer.contains(tmp)) { ball++; }
+        }
+
+        return new Hint(strike, ball);
     }
 }
