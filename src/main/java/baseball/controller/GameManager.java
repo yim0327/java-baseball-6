@@ -24,7 +24,7 @@ public class GameManager {
         do {
             baseballGame.resetAnswer();
             playRound();
-        } while (shouldRestart());
+        } while (!shouldRestart());
     }
 
     private void playRound() {
@@ -53,7 +53,7 @@ public class GameManager {
     private boolean shouldRestart() {
         while(true) {
             try {
-                return !"2".equals(inputView.inputRestartNumber());
+                return "2".equals(inputView.inputRestartNumber());
             } catch (IllegalArgumentException e) {
                 outputView.printError(e.getMessage());
             }
