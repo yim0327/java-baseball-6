@@ -14,8 +14,7 @@ public class Application {
         OutputView outputView = new OutputView();
         NumberGenerator generator = new RandomNumberGenerator();
         AnswerProvider computer = new AnswerProvider(generator);
-        Player player = new Player();
-        BaseballGame game = new BaseballGame(player, computer);
+        BaseballGame game = new BaseballGame(computer);
         GameManager manager = new GameManager(inputView, outputView, game);
 
         manager.playGame();

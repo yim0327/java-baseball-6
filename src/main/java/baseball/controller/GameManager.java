@@ -1,11 +1,10 @@
 package baseball.controller;
 
+import baseball.domain.Ball;
 import baseball.domain.Hint;
 import baseball.service.BaseballGame;
 import baseball.view.InputView;
 import baseball.view.OutputView;
-
-import java.util.List;
 
 public class GameManager {
     private final InputView inputView;
@@ -31,7 +30,7 @@ public class GameManager {
     private void playRound() {
        do {
             try {
-                List<Integer> guess = baseballGame.validateGuess(inputView.inputNumbers());
+                Ball guess = Ball.from(inputView.inputNumbers());
                 Hint hint = baseballGame.judge(guess);
 
                 outputView.printHint(hint);

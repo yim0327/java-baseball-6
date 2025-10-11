@@ -2,14 +2,10 @@ package baseball.service;
 
 import baseball.domain.*;
 
-import java.util.List;
-
 public class BaseballGame {
-    private final Player player;
     private final AnswerProvider answerProvider;
 
-    public BaseballGame(Player player, AnswerProvider answerProvider) {
-        this.player = player;
+    public BaseballGame(AnswerProvider answerProvider) {
         this.answerProvider = answerProvider;
     }
 
@@ -17,11 +13,7 @@ public class BaseballGame {
         answerProvider.setAnswer();
     }
 
-    public List<Integer> validateGuess(String input) {
-        return player.validateNumbers(input);
-    }
-
-    public Hint judge(List<Integer> guess) {
-        return answerProvider.judge(guess);
+    public Hint judge(Ball guess) {
+        return answerProvider.judge(guess.getBallNumbers());
     }
 }

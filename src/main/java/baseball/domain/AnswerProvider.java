@@ -7,26 +7,25 @@ import java.util.List;
 
 public class AnswerProvider {
     private final NumberGenerator generator;
-    private final List<Integer> answer = new ArrayList<>();
-    private final NumberRules rules = new NumberRules();
+    private Ball ball;
 
     public AnswerProvider(NumberGenerator generator) {
         this.generator = generator;
     }
 
     public void setAnswer() {
-        answer.clear();
-        while (answer.size() < NumberRules.DIGIT_LENGTH) {
+        List<Integer> answer = new ArrayList<>();
+        while (answer.size() < Ball.DIGIT_LENGTH) {
             int randomNumber = generator.generate();
             if (!answer.contains(randomNumber)) {
                 answer.add(randomNumber);
             }
         }
-        rules.checkRules(answer);
+         ball = Ball.of(answer);
     }
 
-    public List<Integer> getAnswer() {
-        return List.copyOf(answer);
+    public List<Integer> getAnswerNumbers() {
+        return ball.getBallNumbers();
     }
 
     public Hint judge(List<Integer> guess) {
@@ -36,8 +35,8 @@ public class AnswerProvider {
         for(int i = 0; i < guess.size(); i++) {
             int tmp = guess.get(i);
 
-            if(tmp == answer.get(i)) { strike++; }
-            else if(answer.contains(tmp)) { ball++; }
+            if(tmp == getAnswerNumbers().get(i)) { strike++; }
+            else if(getAnswerNumbers().contains(tmp)) { ball++; }
         }
 
         return new Hint(strike, ball);
